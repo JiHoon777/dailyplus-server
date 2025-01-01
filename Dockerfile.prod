@@ -1,0 +1,47 @@
+# Build stage
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Install pnpm
+RUN npm install -g pnpm
+
+# package.json과 pnpm-lock.yaml만 먼저 복사
+COPY package*.json pnpm-lock.yaml ./
+
+# 의존성 설치
+RUN pnpm install
+
+# 소스 코드 복사 - 이렇게 하면 소스 코드가 변경되었을 때만 다시 빌드
+COPY . .
+
+# 빌드
+RUN pnpm build
+
+# Production stage
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install pnpm
+RUN npm install -g pnpm
+
+# package.json과 pnpm-lock.yaml만 복사
+COPY package*.json pnpm-lock.yaml ./
+
+# production 의존성만 설치
+RUN pnpm install --prod
+
+# builder에서 빌드된 파일들만 복사
+COPY --from=builder /app/dist ./dist
+
+# .env 파일이나 다른 설정 파일들도 필요하다면 복사
+# COPY .env.production .env
+
+EXPOSE 3000
+
+# 헬스체크를 위해 HEALTHCHECK 추가 (선택사항)
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD curl -f http://localhost:3000/health || exit 1
+
+CMD ["node", "dist/main"]

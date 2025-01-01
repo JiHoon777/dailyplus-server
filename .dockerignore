@@ -1,0 +1,29 @@
+# Version control
+.git
+.gitignore
+
+# Dependencies
+node_modules
+npm-debug.log
+
+# Environment
+.env
+.env.*
+
+# Development
+.vscode
+.idea
+*.md
+test
+coverage
+
+# Build output
+dist
+build
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Misc
+.DS_Store
