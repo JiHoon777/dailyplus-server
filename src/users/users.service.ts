@@ -24,7 +24,7 @@ export class UsersService {
     return this.usersRepository.save(user)
   }
 
-  async updateRefreshToken(id: number, refreshToken: string) {
+  async updateRefreshToken(id: number, refreshToken: string | null) {
     const user = await this.findOneById(id)
     user.refreshToken = refreshToken
     return this.usersRepository.save(user)

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -18,6 +19,7 @@ import { UsersModule } from './users/users.module'
       database: process.env.DB_DATABASE,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: process.env.NODE_ENV === 'dev',
+      namingStrategy: new SnakeNamingStrategy(),
     }),
     ConfigModule.forRoot({
       isGlobal: true,
