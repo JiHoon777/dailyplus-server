@@ -7,7 +7,7 @@ import { Reflector } from '@nestjs/core'
 import { JsonWebTokenError, TokenExpiredError } from '@nestjs/jwt'
 import { AuthGuard } from '@nestjs/passport'
 
-import { ApiErrorCode } from '@/common/interfaces/api-response.interface'
+import { ErrorCode } from '@/common/consts/error-code.consts'
 
 import { IS_PUBLIC_KEY } from '../auth.common'
 
@@ -41,7 +41,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     // You can throw an exception based on either "info" or "err" arguments
     if (info instanceof TokenExpiredError) {
       throw new UnauthorizedException({
-        cause: ApiErrorCode.AUTH_TOKEN_EXPIRED,
+        cause: ErrorCode.AUTH_TOKEN_EXPIRED,
       })
     }
 

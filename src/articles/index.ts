@@ -1,1 +1,7 @@
+export * from './articles.controller'
+export * from './articles.module'
+export * from './articles.service'
+export * from './dto/create.dto'
+export * from './dto/update.dto'
 export * from './entities/article.entity'
+export * from './enums/article-type.enum'
