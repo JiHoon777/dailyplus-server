@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
-import { QuotePerson } from '@/quotePersons'
+import { QuotePerson } from '@/quote-persons'
 
 @Entity()
 export class Quote {

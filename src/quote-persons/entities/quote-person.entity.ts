@@ -17,8 +17,8 @@ export class QuotePerson {
   @Column({ type: 'varchar', length: 255, unique: true })
   name: string
 
-  @Column('text')
-  description: string
+  @Column({ type: 'text', nullable: true })
+  description: string | null
 
   @CreateDateColumn()
   createdAt: Date
