@@ -21,12 +21,14 @@ export class Article {
   @Column('text')
   summary: string
 
+  @Index()
   @Column({
     type: 'enum',
     enum: ArticleType,
   })
   type: ArticleType
 
+  @Index()
   @Column('date')
   publishedAt: Date
 
