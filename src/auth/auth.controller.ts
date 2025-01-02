@@ -15,7 +15,7 @@ export class AuthController {
 
   @Public()
   @Post('signup')
-  signup(@Body() input: { email: string; password: string }) {
+  async signup(@Body() input: { email: string; password: string }) {
     return this.authService.signup(input)
   }
 
@@ -29,9 +29,9 @@ export class AuthController {
     return this.authService.signin(user, response)
   }
 
-  @Post('refresh')
+  @Post('refresh-token')
   @UseGuards(JwtRefreshAuthGuard)
-  async refreshToken(
+  refreshToken(
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {
@@ -39,7 +39,7 @@ export class AuthController {
   }
 
   @Post('signout')
-  async signout(
+  signout(
     @CurrentUser() user: User,
     @Res({ passthrough: true }) response: Response,
   ) {

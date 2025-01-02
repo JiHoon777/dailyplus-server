@@ -4,7 +4,10 @@ import {
   UnauthorizedException,
 } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
+import { JsonWebTokenError, TokenExpiredError } from '@nestjs/jwt'
 import { AuthGuard } from '@nestjs/passport'
+
+import { ApiErrorCode } from '@/common/interfaces/api-response.interface'
 
 import { IS_PUBLIC_KEY } from '../auth.common'
 
@@ -34,8 +37,18 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return super.canActivate(context)
   }
 
-  handleRequest(err, user, _info) {
+  handleRequest(err, user, info) {
     // You can throw an exception based on either "info" or "err" arguments
+    if (info instanceof TokenExpiredError) {
+      throw new UnauthorizedException({
+        cause: ApiErrorCode.AUTH_TOKEN_EXPIRED,
+      })
+    }
+
+    if (info instanceof JsonWebTokenError) {
+      throw new UnauthorizedException('유효하지 않은 토큰입니다')
+    }
+
     if (err || !user) {
       throw err || new UnauthorizedException()
     }

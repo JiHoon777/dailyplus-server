@@ -1,5 +1,26 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { JsonWebTokenError, TokenExpiredError } from '@nestjs/jwt'
 import { AuthGuard } from '@nestjs/passport'
 
+import { ApiErrorCode } from '@/common/interfaces/api-response.interface'
+
 @Injectable()
-export class JwtRefreshAuthGuard extends AuthGuard('jwt-refresh') {}
+export class JwtRefreshAuthGuard extends AuthGuard('jwt-refresh') {
+  handleRequest(err: any, user: any, info: any) {
+    if (info instanceof TokenExpiredError) {
+      throw new UnauthorizedException({
+        cause: ApiErrorCode.AUTH_REFRESH_TOKEN_EXPIRED,
+      })
+    }
+
+    if (info instanceof JsonWebTokenError) {
+      throw new UnauthorizedException('유효하지 않은 리프레시 토큰입니다')
+    }
+
+    if (err || !user) {
+      throw err || new UnauthorizedException()
+    }
+
+    return user
+  }
+}
