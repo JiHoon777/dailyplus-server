@@ -4,6 +4,8 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Request } from 'express'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 
+import { IConfiguration } from '@/config'
+
 import { IJwtPayload } from '../auth.common'
 import { AuthService } from '../auth.service'
 
@@ -14,13 +16,13 @@ export class JwtRefreshStrategy extends PassportStrategy(
 ) {
   constructor(
     private readonly authService: AuthService,
-    configService: ConfigService,
+    configService: ConfigService<IConfiguration>,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request) => request.cookies?.Refresh,
       ]),
-      secretOrKey: configService.getOrThrow('JWT_REFRESH_SECRET_KEY'),
+      secretOrKey: configService.get('jwt', { infer: true }).refreshSecretKey,
       ignoreExpiration: false,
       passReqToCallback: true,
     })

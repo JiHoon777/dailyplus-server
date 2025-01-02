@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
-import { UserRole } from '@/auth/auth.common'
+import { UserRole } from '../enums/users-role.enum'
 
 @Entity()
 export class User {

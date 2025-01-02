@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt'
 import { compare, hash } from 'bcryptjs'
 import { Response } from 'express'
 
+import { IConfiguration } from '@/config'
 import { User } from '@/users/entities/user.entity'
 import { UsersService } from '@/users/users.service'
 
@@ -12,8 +13,12 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
+    private readonly configService: ConfigService<IConfiguration>,
   ) {}
+
+  private get jwtConfig() {
+    return this.configService.get('jwt', { infer: true })
+  }
 
   async signin(
     user: Omit<User, 'password'>,
@@ -31,12 +36,12 @@ export class AuthService {
 
     response.cookie('Authentication', accessToken, {
       httpOnly: true,
-      secure: this.configService.get('NODE_ENV') === 'prod',
+      secure: this.configService.get('env') === 'prod',
       expires: expiresAccessToken,
     })
     response.cookie('Refresh', refreshToken, {
       httpOnly: true,
-      secure: this.configService.get('NODE_ENV') === 'prod',
+      secure: this.configService.get('env') === 'prod',
       expires: expiresRefreshToken,
     })
 
@@ -91,12 +96,12 @@ export class AuthService {
 
     response.cookie('Authentication', '', {
       httpOnly: true,
-      secure: this.configService.get('NODE_ENV') === 'prod',
+      secure: this.configService.get('env') === 'prod',
       expires: new Date(0),
     })
     response.cookie('Refresh', '', {
       httpOnly: true,
-      secure: this.configService.get('NODE_ENV') === 'prod',
+      secure: this.configService.get('env') === 'prod',
       expires: new Date(0),
     })
 
@@ -106,37 +111,27 @@ export class AuthService {
   private async generateTokens(user: Omit<User, 'password'>) {
     const expiresAccessToken = new Date()
     expiresAccessToken.setMilliseconds(
-      expiresAccessToken.getTime() +
-        parseInt(
-          this.configService.getOrThrow<string>('JWT_SECRET_EXPIRATION'),
-        ),
+      expiresAccessToken.getTime() + parseInt(this.jwtConfig.secretExpiration),
     )
     const expiresRefreshToken = new Date()
     expiresRefreshToken.setMilliseconds(
       expiresRefreshToken.getTime() +
-        parseInt(
-          this.configService.getOrThrow<string>(
-            'JWT_REFRESH_SECRET_EXPIRATION',
-          ),
-        ),
+        parseInt(this.jwtConfig.refreshSecretExpiration),
     )
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         { userId: user.id },
         {
-          secret: this.configService.get<string>('JWT_SECRET_KEY'),
-          expiresIn:
-            this.configService.get<string>('JWT_SECRET_EXPIRATION') + 'ms',
+          secret: this.jwtConfig.secretKey,
+          expiresIn: this.jwtConfig.secretExpiration + 'ms',
         },
       ),
       this.jwtService.signAsync(
         { userId: user.id },
         {
-          secret: this.configService.get<string>('JWT_REFRESH_SECRET_KEY'),
-          expiresIn:
-            this.configService.get<string>('JWT_REFRESH_SECRET_EXPIRATION') +
-            'ms',
+          secret: this.jwtConfig.refreshSecretKey,
+          expiresIn: this.jwtConfig.refreshSecretExpiration + 'ms',
         },
       ),
     ])

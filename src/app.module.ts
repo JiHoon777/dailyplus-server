@@ -6,6 +6,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
+import configuration from './config/configuration'
 import { UsersModule } from './users/users.module'
 
 @Module({
@@ -24,6 +25,8 @@ import { UsersModule } from './users/users.module'
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: process.env[process.env.NODE_ENV],
+      load: [configuration],
+      cache: true,
     }),
     UsersModule,
     AuthModule,
