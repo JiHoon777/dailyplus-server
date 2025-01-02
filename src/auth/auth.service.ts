@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import * as bcrypt from 'bcrypt'
+import { compare, hash } from 'bcryptjs'
 
 import { User } from '@/users/entities/user.entity'
 import { UsersService } from '@/users/users.service'
@@ -20,7 +20,7 @@ export class AuthService {
   ): Promise<Omit<User, 'password'> | null> {
     const user = await this.usersService.findOneByEmail(email)
 
-    if (user && (await bcrypt.compare(password, user.password))) {
+    if (user && (await compare(password, user.password))) {
       const { password: _, ...result } = user
       return result
     }
@@ -28,10 +28,31 @@ export class AuthService {
     return null
   }
 
-  async login(user: Omit<User, 'password'>): Promise<{ access_token: string }> {
+  async signin(
+    user: Omit<User, 'password'>,
+  ): Promise<{ access_token: string; user: Omit<User, 'password'> }> {
     const payload: IJwtPayload = { userId: user.id, email: user.email }
     return {
       access_token: this.jwtService.sign(payload),
+      user,
+    }
+  }
+
+  async signup({
+    email,
+    password,
+  }: {
+    email: string
+    password: string
+  }): Promise<{ access_token: string; user: Omit<User, 'password'> }> {
+    const hashedPassword = await hash(password, 10)
+    const user = await this.usersService.create(email, hashedPassword)
+    const payload: IJwtPayload = { userId: user.id, email: user.email }
+
+    const { password: _, ...result } = user
+    return {
+      access_token: this.jwtService.sign(payload),
+      user: result,
     }
   }
 }

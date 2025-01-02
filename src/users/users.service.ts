@@ -14,4 +14,9 @@ export class UsersService {
   async findOneByEmail(email: string) {
     return this.usersRepository.findOne({ where: { email } })
   }
+
+  async create(email: string, password: string) {
+    const user = this.usersRepository.create({ email, password })
+    return this.usersRepository.save(user)
+  }
 }

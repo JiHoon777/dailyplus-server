@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { AppController } from './app.controller'
@@ -17,6 +18,10 @@ import { UsersModule } from './users/users.module'
       database: process.env.DB_DATABASE,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: process.env.NODE_ENV === 'dev',
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: process.env[process.env.NODE_ENV],
     }),
     UsersModule,
     AuthModule,

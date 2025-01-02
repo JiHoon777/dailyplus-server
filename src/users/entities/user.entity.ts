@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
@@ -10,6 +11,7 @@ import { UserRole } from '@/auth/auth.common'
 
 @Entity()
 export class User {
+  @Index()
   @PrimaryGeneratedColumn()
   id: number
 
@@ -23,7 +25,7 @@ export class User {
   @Column('text')
   password: string
 
-  @Column('text')
+  @Column({ type: 'text', nullable: true })
   name: string
 
   @Column({
