@@ -18,10 +18,7 @@ export class AuthService {
   async signin(
     user: Omit<User, 'password'>,
     response: Response,
-  ): Promise<{
-    user: Omit<User, 'password'>
-    accessToken: string
-  }> {
+  ): Promise<Omit<User, 'password'>> {
     const {
       accessToken,
       refreshToken,
@@ -43,7 +40,7 @@ export class AuthService {
       expires: expiresRefreshToken,
     })
 
-    return { user, accessToken }
+    return user
   }
 
   async signup({
