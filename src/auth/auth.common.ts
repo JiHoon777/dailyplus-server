@@ -13,5 +13,4 @@ export const Roles = (role: UserRole) => SetMetadata(USER_ROLE_KEY, role)
 
 export interface IJwtPayload {
   userId: number
-  email: string
 }

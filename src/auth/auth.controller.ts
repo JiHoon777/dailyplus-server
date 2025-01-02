@@ -1,8 +1,13 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common'
+import { Response } from 'express'
+
+import { User } from '@/users/entities/user.entity'
 
 import { Public } from './auth.common'
 import { AuthService } from './auth.service'
-import { LocalAuthGuard } from './local-auth.guard'
+import { CurrentUser } from './decorators/current-user.decorator'
+import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard'
+import { LocalAuthGuard } from './guards/local-auth.guard'
 
 @Controller('auth')
 export class AuthController {
@@ -17,18 +22,32 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('signin')
-  signin(@Request() req) {
-    return this.authService.signin(req.user)
+  signin(
+    @CurrentUser() user: User,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.authService.signin(user, response)
   }
 
-  // Todo: refresh token
+  @Post('refresh')
+  @UseGuards(JwtRefreshAuthGuard)
+  async refreshToken(
+    @CurrentUser() user: User,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.authService.signin(user, response)
+  }
+
   @Post('signout')
-  async signout(@Request() req) {
-    return null
+  async signout(
+    @CurrentUser() user: User,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.authService.signout(user.id, response)
   }
 
   @Get('profile')
-  getProfile(@Request() req) {
-    return req.user
+  getProfile(@CurrentUser() user: User) {
+    return user
   }
 }

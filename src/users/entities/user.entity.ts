@@ -26,7 +26,7 @@ export class User {
   password: string
 
   @Column({ type: 'text', nullable: true })
-  name: string
+  name: string | null
 
   @Column({
     type: 'enum',
@@ -34,6 +34,9 @@ export class User {
     default: UserRole.USER,
   })
   role: UserRole
+
+  @Column({ type: 'text', nullable: true })
+  refreshToken: string | null
 
   @CreateDateColumn()
   createdAt: Date

@@ -15,8 +15,18 @@ export class UsersService {
     return this.usersRepository.findOne({ where: { email } })
   }
 
+  async findOneById(id: number) {
+    return this.usersRepository.findOne({ where: { id } })
+  }
+
   async create(email: string, password: string) {
     const user = this.usersRepository.create({ email, password })
+    return this.usersRepository.save(user)
+  }
+
+  async updateRefreshToken(id: number, refreshToken: string) {
+    const user = await this.findOneById(id)
+    user.refreshToken = refreshToken
     return this.usersRepository.save(user)
   }
 }
