@@ -9,6 +9,7 @@ import { TransformInterceptor } from './shared/interceptors/transform.intercepto
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
+  app.useLogger(['error', 'warn', 'log', 'debug', 'verbose'])
   app.useGlobalPipes(new ValidationPipe())
   app.useGlobalFilters(new AllExceptionsFilter())
   app.useGlobalInterceptors(new TransformInterceptor())

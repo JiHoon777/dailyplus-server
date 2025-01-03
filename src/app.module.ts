@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
@@ -9,6 +9,7 @@ import { AppService } from './app.service'
 import { ArticlesModule } from './articles'
 import { AuthModule } from './auth'
 import configuration from './config/configuration'
+import { LoggerMiddleware } from './middleware'
 import { QuoteAiInterpretationsModule } from './quote-ai-interpretations'
 import { QuotePersonsModule } from './quote-persons'
 import { QuotesModule } from './quotes'
@@ -44,4 +45,8 @@ import { UsersModule } from './users'
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*') // 모든 라우트에 적용
+  }
+}

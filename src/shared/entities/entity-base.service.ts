@@ -6,6 +6,7 @@ import { omitBy } from 'lodash'
 
 import { ErrorCode } from '@/shared/consts'
 import { ensureIf } from '@/shared/utils'
+import { Logger } from '@nestjs/common'
 
 /**
  * 공통 쿼리 옵션을 위한 인터페이스
@@ -25,6 +26,8 @@ export interface ICommonQueryPayload<ENTITY extends BaseEntity> {
  * @template T_Entity BaseEntity를 상속받는 엔티티 타입
  */
 export abstract class BaseEntityService<T_Entity extends BaseEntity> {
+  protected logger = new Logger(this.constructor.name)
+
   protected constructor(protected readonly repository: Repository<T_Entity>) {}
 
   /**
