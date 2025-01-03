@@ -1,5 +1,5 @@
-import type { ApiResponse } from '../interfaces/api-response.interface'
 import type { ErrorCode } from '../consts/error-code.consts'
+import type { ApiResponse } from '../interfaces/api-response.interface'
 
 export function createSuccessResponse<T>(data: T): ApiResponse<T> {
   return {
