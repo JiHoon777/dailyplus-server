@@ -22,7 +22,7 @@ export class ArticlesService extends BaseEntityService<Article> {
 
     const [list, total] = await this.query({
       pageOpt: { page, size },
-      order: { publishedAt: 'DESC' },
+      order: { published_at: 'DESC' },
       decorator: (qb) => {
         qb.where('e.published_at IS NOT NULL')
 

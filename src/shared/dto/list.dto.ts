@@ -1,11 +1,11 @@
 import { Expose, Type } from 'class-transformer'
-import { IsNumber } from 'class-validator'
+import { IsNumberString } from 'class-validator'
 
 export class ListRequestDto {
-  @IsNumber()
+  @IsNumberString()
   page: number
 
-  @IsNumber()
+  @IsNumberString()
   size: number
 }
 

@@ -5,6 +5,7 @@ import {
   ExceptionFilter,
   HttpException,
   HttpStatus,
+  Logger,
 } from '@nestjs/common'
 import { Response } from 'express'
 
@@ -14,6 +15,8 @@ import { createErrorResponse } from '../utils/response.utils'
 // Todo: Refactor
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
+  private logger = new Logger(this.constructor.name)
+
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp()
     const response = ctx.getResponse<Response>()
@@ -23,6 +26,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
       '서버 오류가 발생했습니다.',
     )
     let status = HttpStatus.INTERNAL_SERVER_ERROR
+
+    this.logger.error(exception)
 
     if (exception instanceof HttpException) {
       status = exception.getStatus()
