@@ -26,7 +26,7 @@ export class QuoteAiInterpretation extends BaseEntity {
   content: string
 
   @Column({ type: 'text', nullable: true })
-  prompt: string
+  prompt: string | null
 
   @ManyToOne(() => Quote, { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'quote_id' })

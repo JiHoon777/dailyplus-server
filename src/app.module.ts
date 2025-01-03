@@ -6,11 +6,12 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { ArticlesModule } from './articles'
-import { AuthModule } from './auth/auth.module'
+import { AuthModule } from './auth'
 import configuration from './config/configuration'
-import { QuotePersonsModule } from './quote-persons/quote-persons.module'
+import { QuoteAiInterpretationsModule } from './quote-ai-interpretations'
+import { QuotePersonsModule } from './quote-persons'
 import { QuotesModule } from './quotes'
-import { UsersModule } from './users/users.module'
+import { UsersModule } from './users'
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { UsersModule } from './users/users.module'
     ArticlesModule,
     QuotesModule,
     QuotePersonsModule,
+    QuoteAiInterpretationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

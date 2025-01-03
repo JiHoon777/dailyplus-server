@@ -25,7 +25,7 @@ export class QuotesService extends BaseEntityService<Quote> {
       order: { createdAt: 'DESC' },
       decorator: (qb) => {
         if (quotePersonName) {
-          qb.andWhere('quote_person.name = :quotePersonName', {
+          qb.andWhere('e.name = :quotePersonName', {
             quotePersonName,
           })
         }

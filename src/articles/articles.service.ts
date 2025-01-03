@@ -24,10 +24,10 @@ export class ArticlesService extends BaseEntityService<Article> {
       pageOpt: { page, size },
       order: { publishedAt: 'DESC' },
       decorator: (qb) => {
-        qb.where('published_at IS NOT NULL')
+        qb.where('e.published_at IS NOT NULL')
 
         if (type) {
-          qb.andWhere('article.type = :type', { type })
+          qb.andWhere('e.type = :type', { type })
         }
       },
     })
