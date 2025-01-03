@@ -66,8 +66,6 @@ export abstract class BaseEntityService<T_Entity extends BaseEntity> {
       payload.decorator(qb)
     }
 
-    qb = qb.select()
-
     qb = qb.skip(skip).take(take)
 
     if (!payload.order) {
