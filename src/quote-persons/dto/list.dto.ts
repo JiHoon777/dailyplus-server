@@ -1,3 +1,3 @@
 import { ListRequestDto } from '@/shared/dto'
 
-export class ListQuotePersonDto extends ListRequestDto {}
+export class ListQuotePersonRequestDto extends ListRequestDto {}

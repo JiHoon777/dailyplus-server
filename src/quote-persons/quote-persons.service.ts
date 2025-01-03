@@ -5,7 +5,7 @@ import { Repository } from 'typeorm'
 import { ListResponseDto } from '@/shared/dto'
 import { BaseEntityService } from '@/shared/entities'
 
-import { ListQuotePersonDto } from './dto/list.dto'
+import { ListQuotePersonRequestDto } from './dto'
 import { QuotePerson } from './quote-person.entity'
 
 @Injectable()
@@ -17,7 +17,9 @@ export class QuotePersonsService extends BaseEntityService<QuotePerson> {
     super(repository)
   }
 
-  async list(input: ListQuotePersonDto): Promise<ListResponseDto<QuotePerson>> {
+  async list(
+    input: ListQuotePersonRequestDto,
+  ): Promise<ListResponseDto<QuotePerson>> {
     const { page, size } = input
 
     const [list, total] = await this.query({

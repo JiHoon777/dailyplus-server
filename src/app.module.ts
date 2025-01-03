@@ -8,6 +8,7 @@ import { AppService } from './app.service'
 import { ArticlesModule } from './articles'
 import { AuthModule } from './auth/auth.module'
 import configuration from './config/configuration'
+import { QuotePersonsModule } from './quote-persons/quote-persons.module'
 import { QuotesModule } from './quotes'
 import { UsersModule } from './users/users.module'
 
@@ -34,6 +35,7 @@ import { UsersModule } from './users/users.module'
     AuthModule,
     ArticlesModule,
     QuotesModule,
+    QuotePersonsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
