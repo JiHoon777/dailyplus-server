@@ -1,13 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
 
 import { Quote } from '@/quotes'
 import { BaseEntity } from '@/shared/entities'
@@ -15,10 +6,6 @@ import { User } from '@/users'
 
 @Entity()
 export class QuoteAiInterpretation extends BaseEntity {
-  @Index()
-  @PrimaryGeneratedColumn()
-  id: number
-
   @Column('text')
   modelVersion: string
 
@@ -35,10 +22,4 @@ export class QuoteAiInterpretation extends BaseEntity {
   @ManyToOne(() => User, { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'user_id' })
   user: User | null
-
-  @CreateDateColumn()
-  createdAt: Date
-
-  @UpdateDateColumn()
-  updatedAt: Date
 }

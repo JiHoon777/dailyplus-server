@@ -25,7 +25,7 @@ export class QuotesController {
   }
 
   @Public()
-  @Get()
+  @Get('list')
   list(@Query() query: ListQuoteRequestDto) {
     return this.quotesService.list(query)
   }

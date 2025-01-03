@@ -6,7 +6,7 @@ import { ListResponseDto } from '@/shared/dto'
 import { BaseEntityService } from '@/shared/entities'
 
 import { ListArticleRequestDto } from './dto'
-import { Article } from './entities/article.entity'
+import { Article } from './article.entity'
 
 @Injectable()
 export class ArticlesService extends BaseEntityService<Article> {

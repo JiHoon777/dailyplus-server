@@ -2,7 +2,7 @@ import { Column, Entity, Index } from 'typeorm'
 
 import { BaseEntity } from '@/shared/entities'
 
-import { ArticleType } from '../enums/article-type.enum'
+import { ArticleType } from './enums/article-type.enum'
 
 @Entity()
 export class Article extends BaseEntity {

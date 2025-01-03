@@ -22,7 +22,7 @@ export class QuotesService extends BaseEntityService<Quote> {
 
     const [list, total] = await this.query({
       pageOpt: { page, size },
-      order: { createdAt: 'DESC' },
+      order: { created_at: 'DESC' },
       decorator: (qb) => {
         if (quotePersonName) {
           qb.andWhere('e.name = :quotePersonName', {
