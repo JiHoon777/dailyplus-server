@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
-import { ErrorCode } from '@/common/consts'
-import { ListResponseDto } from '@/common/dto'
-import { ensureIf } from '@/common/utils'
+import { ErrorCode } from '@/shared/consts'
+import { ListResponseDto } from '@/shared/dto'
+import { ensureIf } from '@/shared/utils'
 
 import {
   CreateArticleDto,

@@ -1,6 +1,6 @@
 import { IsEnum, IsOptional } from 'class-validator'
 
-import { ListRequestDto } from '@/common/dto'
+import { ListRequestDto } from '@/shared/dto'
 
 import { ArticleType } from '../enums'
 

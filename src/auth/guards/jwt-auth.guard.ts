@@ -7,7 +7,7 @@ import { Reflector } from '@nestjs/core'
 import { JsonWebTokenError, TokenExpiredError } from '@nestjs/jwt'
 import { AuthGuard } from '@nestjs/passport'
 
-import { ErrorCode } from '@/common/consts/error-code.consts'
+import { ErrorCode } from '@/shared/consts/error-code.consts'
 
 import { IS_PUBLIC_KEY } from '../auth.common'
 

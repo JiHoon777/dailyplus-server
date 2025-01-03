@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JsonWebTokenError, TokenExpiredError } from '@nestjs/jwt'
 import { AuthGuard } from '@nestjs/passport'
 
-import { ErrorCode } from '@/common/consts/error-code.consts'
+import { ErrorCode } from '@/shared/consts/error-code.consts'
 
 @Injectable()
 export class JwtRefreshAuthGuard extends AuthGuard('jwt-refresh') {
