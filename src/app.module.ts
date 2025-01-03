@@ -8,6 +8,7 @@ import { AppService } from './app.service'
 import { ArticlesModule } from './articles'
 import { AuthModule } from './auth/auth.module'
 import configuration from './config/configuration'
+import { QuotesModule } from './quotes'
 import { UsersModule } from './users/users.module'
 
 @Module({
@@ -32,6 +33,7 @@ import { UsersModule } from './users/users.module'
     UsersModule,
     AuthModule,
     ArticlesModule,
+    QuotesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
