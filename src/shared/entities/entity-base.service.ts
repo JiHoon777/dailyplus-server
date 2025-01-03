@@ -46,7 +46,7 @@ export abstract class BaseEntityService<T_Entity extends BaseEntity> {
     )
   }
 
-  async remove(id: number): Promise<void> {
+  async delete(id: number): Promise<void> {
     await this.repository
       .createQueryBuilder('e')
       .delete()
