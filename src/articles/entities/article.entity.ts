@@ -1,20 +1,11 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  Index,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm'
+import { Column, Entity, Index } from 'typeorm'
+
+import { BaseEntity } from '@/shared/entities'
 
 import { ArticleType } from '../enums/article-type.enum'
 
 @Entity()
-export class Article {
-  @Index()
-  @PrimaryGeneratedColumn()
-  id: number
-
+export class Article extends BaseEntity {
   @Column('text')
   title: string
 
@@ -37,10 +28,4 @@ export class Article {
 
   @Column('text')
   referenceName: string
-
-  @CreateDateColumn()
-  createdAt: Date
-
-  @UpdateDateColumn()
-  updatedAt: Date
 }

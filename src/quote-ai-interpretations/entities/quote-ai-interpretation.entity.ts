@@ -10,10 +10,11 @@ import {
 } from 'typeorm'
 
 import { Quote } from '@/quotes'
+import { BaseEntity } from '@/shared/entities'
 import { User } from '@/users'
 
 @Entity()
-export class QuoteAiInterpretation {
+export class QuoteAiInterpretation extends BaseEntity {
   @Index()
   @PrimaryGeneratedColumn()
   id: number

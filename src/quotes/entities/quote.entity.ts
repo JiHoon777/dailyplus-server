@@ -1,22 +1,10 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm'
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm'
 
 import { QuotePerson } from '@/quote-persons'
+import { BaseEntity } from '@/shared/entities'
 
 @Entity()
-export class Quote {
-  @Index()
-  @PrimaryGeneratedColumn()
-  id: number
-
+export class Quote extends BaseEntity {
   @Index()
   @Column({
     type: 'varchar',
@@ -31,10 +19,4 @@ export class Quote {
   @ManyToOne(() => QuotePerson)
   @JoinColumn({ name: 'quote_person_id' })
   quotePerson: QuotePerson
-
-  @CreateDateColumn()
-  createdAt: Date
-
-  @UpdateDateColumn()
-  updatedAt: Date
 }

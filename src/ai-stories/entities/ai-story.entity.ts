@@ -1,22 +1,10 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
 
+import { BaseEntity } from '@/shared/entities'
 import { User } from '@/users'
 
 @Entity()
-export class AiStory {
-  @Index()
-  @PrimaryGeneratedColumn()
-  id: number
-
+export class AiStory extends BaseEntity {
   @Column('text')
   title: string
 
@@ -32,10 +20,4 @@ export class AiStory {
   @ManyToOne(() => User, { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'user_id' })
   user: User | null
-
-  @CreateDateColumn()
-  createdAt: Date
-
-  @UpdateDateColumn()
-  updatedAt: Date
 }

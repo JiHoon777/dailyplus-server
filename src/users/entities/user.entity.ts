@@ -1,20 +1,11 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  Index,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm'
+import { Column, Entity } from 'typeorm'
+
+import { BaseEntity } from '@/shared/entities'
 
 import { UserRole } from '../enums/users-role.enum'
 
 @Entity()
-export class User {
-  @Index()
-  @PrimaryGeneratedColumn()
-  id: number
-
+export class User extends BaseEntity {
   @Column({
     type: 'varchar',
     length: 255,
@@ -37,10 +28,4 @@ export class User {
 
   @Column({ type: 'text', nullable: true })
   refreshToken: string | null
-
-  @CreateDateColumn()
-  createdAt: Date
-
-  @UpdateDateColumn()
-  updatedAt: Date
 }
