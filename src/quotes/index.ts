@@ -1,1 +1,1 @@
-export * from './entities/quote.entity'
+export * from './quote.entity'

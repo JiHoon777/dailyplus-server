@@ -21,8 +21,8 @@ export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
   @Post()
-  create(@Body() createArticleDto: CreateArticleDto) {
-    return this.articlesService.create(createArticleDto)
+  create(@Body() body: CreateArticleDto) {
+    return this.articlesService.create(body)
   }
 
   @Public()
@@ -40,13 +40,13 @@ export class ArticlesController {
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateArticleDto: UpdateArticleDto,
+    @Body() body: UpdateArticleDto,
   ) {
-    return this.articlesService.update(id, updateArticleDto)
+    return this.articlesService.update(id, body)
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
+  delete(@Param('id', ParseIntPipe) id: number) {
     return this.articlesService.delete(id)
   }
 }
