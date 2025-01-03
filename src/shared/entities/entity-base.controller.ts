@@ -1,1 +1,1 @@
-export class BaseEntityController {}
+export abstract class BaseEntityController {}

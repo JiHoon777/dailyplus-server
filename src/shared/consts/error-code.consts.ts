@@ -1,5 +1,6 @@
 export enum ErrorCode {
   COMMON_NOT_FOUND = 'COMMON.NOT_FOUND',
+  COMMON_NO_INPUT = 'COMMON.NO_INPUT',
 
   AUTH_UNAUTHORIZED = 'AUTH.UNAUTHORIZED',
   AUTH_TOKEN_EXPIRED = 'AUTH.TOKEN_EXPIRED',
@@ -10,6 +11,7 @@ export enum ErrorCode {
 
 export const ErrorCodeMessage: Record<ErrorCode, string> = {
   [ErrorCode.COMMON_NOT_FOUND]: 'Not Found',
+  [ErrorCode.COMMON_NO_INPUT]: 'No Input data',
 
   [ErrorCode.AUTH_UNAUTHORIZED]: 'Unauthorized',
   [ErrorCode.AUTH_TOKEN_EXPIRED]: 'Token is expired',
