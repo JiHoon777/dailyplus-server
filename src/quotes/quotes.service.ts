@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
@@ -7,6 +8,7 @@ import { BaseEntityService } from '@/shared/entities'
 import { ListQuoteRequestDto } from './dto'
 import { Quote } from './quote.entity'
 
+@Injectable()
 export class QuotesService extends BaseEntityService<Quote> {
   constructor(
     @InjectRepository(Quote)
@@ -18,7 +20,7 @@ export class QuotesService extends BaseEntityService<Quote> {
   async list(input: ListQuoteRequestDto): Promise<ListResponseDto<Quote>> {
     const { page, size, quotePersonName } = input
 
-    const [quotes, total] = await this.query({
+    const [list, total] = await this.query({
       pageOpt: { page, size },
       order: { createdAt: 'DESC' },
       decorator: (qb) => {
@@ -30,6 +32,6 @@ export class QuotesService extends BaseEntityService<Quote> {
       },
     })
 
-    return ListResponseDto.of(quotes, total, page, size)
+    return ListResponseDto.of(list, total, page, size)
   }
 }

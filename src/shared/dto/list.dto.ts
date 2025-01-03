@@ -1,12 +1,10 @@
-import { Expose, Transform, Type } from 'class-transformer'
+import { Expose, Type } from 'class-transformer'
 import { IsNumber } from 'class-validator'
 
 export class ListRequestDto {
-  @Transform(({ value }) => parseInt(value))
   @IsNumber()
   page: number
 
-  @Transform(({ value }) => parseInt(value))
   @IsNumber()
   size: number
 }
