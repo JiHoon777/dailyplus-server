@@ -8,25 +8,25 @@ import { User } from './entities/user.entity'
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    private repository: Repository<User>,
   ) {}
 
   async findOneByEmail(email: string) {
-    return this.usersRepository.findOne({ where: { email } })
+    return this.repository.findOne({ where: { email } })
   }
 
   async findOneById(id: number) {
-    return this.usersRepository.findOne({ where: { id } })
+    return this.repository.findOne({ where: { id } })
   }
 
   async create(email: string, password: string) {
-    const user = this.usersRepository.create({ email, password })
-    return this.usersRepository.save(user)
+    const user = this.repository.create({ email, password })
+    return this.repository.save(user)
   }
 
   async updateRefreshToken(id: number, refreshToken: string | null) {
     const user = await this.findOneById(id)
     user.refreshToken = refreshToken
-    return this.usersRepository.save(user)
+    return this.repository.save(user)
   }
 }

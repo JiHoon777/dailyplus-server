@@ -5,29 +5,27 @@ import { Repository } from 'typeorm'
 import { ListResponseDto } from '@/shared/dto'
 import { BaseEntityService } from '@/shared/entities'
 
-import { ListArticleRequestDto } from './dto'
-import { Article } from './entities/article.entity'
+import { AiStory } from './ai-story.entity'
+import { ListAiStoryRequestDto } from './dto'
 
 @Injectable()
-export class ArticlesService extends BaseEntityService<Article> {
+export class AiStoriesService extends BaseEntityService<AiStory> {
   constructor(
-    @InjectRepository(Article)
-    repository: Repository<Article>,
+    @InjectRepository(AiStory)
+    repository: Repository<AiStory>,
   ) {
     super(repository)
   }
 
-  async list(input: ListArticleRequestDto): Promise<ListResponseDto<Article>> {
-    const { page, size, type } = input
+  async list(input: ListAiStoryRequestDto): Promise<ListResponseDto<AiStory>> {
+    const { page, size, userId } = input
 
     const [list, total] = await this.query({
       pageOpt: { page, size },
       order: { publishedAt: 'DESC' },
       decorator: (qb) => {
-        qb.where('e.published_at IS NOT NULL')
-
-        if (type) {
-          qb.andWhere('e.type = :type', { type })
+        if (userId) {
+          qb.andWhere('e.user_id = :userId', { userId })
         }
       },
     })

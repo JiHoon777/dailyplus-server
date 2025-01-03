@@ -12,9 +12,9 @@ import { Quote } from './quote.entity'
 export class QuotesService extends BaseEntityService<Quote> {
   constructor(
     @InjectRepository(Quote)
-    quotesRepository: Repository<Quote>,
+    repository: Repository<Quote>,
   ) {
-    super(quotesRepository)
+    super(repository)
   }
 
   async list(input: ListQuoteRequestDto): Promise<ListResponseDto<Quote>> {
