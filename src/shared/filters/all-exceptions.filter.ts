@@ -27,6 +27,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     )
     let status = HttpStatus.INTERNAL_SERVER_ERROR
 
+    this.logger.error(host)
     this.logger.error(exception)
 
     if (exception instanceof HttpException) {

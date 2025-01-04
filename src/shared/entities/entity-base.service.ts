@@ -95,7 +95,7 @@ export abstract class BaseEntityService<T_Entity extends BaseEntity> {
    * ```typescript
    * const [articles, total] = await this.query({
    *   pageOpt: { page: 1, size: 10 },
-   *   order: { createdAt: 'DESC' },
+   *   order: { created_at: 'DESC' },
    *   decorator: (qb) => {
    *     qb.where('published = :published', { published: true });
    *   },

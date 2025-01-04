@@ -29,7 +29,7 @@ export class QuotePersonsController {
   }
 
   @Public()
-  @Get()
+  @Get('list')
   list(@Query() query: ListQuotePersonRequestDto) {
     return this.quotePersonsService.list(query)
   }

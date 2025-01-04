@@ -20,7 +20,7 @@ export class Article extends BaseEntity {
   type: ArticleType
 
   @Index()
-  @Column('date')
+  @Column('timestamp')
   publishedAt: Date
 
   @Column('text')
