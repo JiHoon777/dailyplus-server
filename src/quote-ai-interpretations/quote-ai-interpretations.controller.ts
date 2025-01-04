@@ -14,6 +14,7 @@ import { Public } from '@/auth/auth.common'
 
 import {
   CreateQuoteAiInterpretationDto,
+  GenerateQuoteAiInterpretationDto,
   ListQuoteAiInterpretationRequestDto,
   UpdateQuoteAiInterpretationDto,
 } from './dto'
@@ -28,6 +29,13 @@ export class QuoteAiInterpretationsController {
   @Post()
   create(@Body() body: CreateQuoteAiInterpretationDto) {
     return this.quoteAiInterpretationsService.create(body)
+  }
+
+  @Post('generate-with-ai')
+  generateWithAi(@Body() body: GenerateQuoteAiInterpretationDto) {
+    return this.quoteAiInterpretationsService.generateInterpretationAndSave(
+      body,
+    )
   }
 
   @Public()

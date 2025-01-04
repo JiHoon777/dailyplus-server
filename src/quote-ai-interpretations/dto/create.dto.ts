@@ -1,4 +1,4 @@
-import { IsNumberString, IsOptional, IsString } from 'class-validator'
+import { IsNumber, IsNumberString, IsOptional, IsString } from 'class-validator'
 
 export class CreateQuoteAiInterpretationDto {
   @IsString()
@@ -15,5 +15,13 @@ export class CreateQuoteAiInterpretationDto {
   quoteId: number
 
   @IsNumberString()
+  userId: number
+}
+
+export class GenerateQuoteAiInterpretationDto {
+  @IsNumber()
+  quoteId: number
+
+  @IsNumber()
   userId: number
 }

@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import OpenAI from 'openai'
+import { ChatModel } from 'openai/resources'
 
 import { IConfiguration } from '@/config'
 import { ErrorCode } from '@/shared/consts'
 import { ensureIf } from '@/shared/utils'
+
+export type OpenAiChatModel = OpenAI.Chat.ChatModel & ChatModel
 
 @Injectable()
 export class OpenAiService {
@@ -20,7 +23,7 @@ export class OpenAiService {
     model = 'gpt-4o-mini',
     messages,
   }: {
-    model: OpenAI.Chat.ChatModel
+    model: OpenAiChatModel
     messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[]
   }) {
     const completion = await this.openai.chat.completions.create({
@@ -34,6 +37,4 @@ export class OpenAiService {
 
     return res
   }
-
-  // Add more methods as needed for different OpenAI features
 }
