@@ -16,4 +16,8 @@ export default (): IConfiguration => ({
     refreshSecretKey: process.env.JWT_REFRESH_SECRET_KEY,
     refreshSecretExpiration: process.env.JWT_REFRESH_SECRET_EXPIRATION,
   },
+  ai: {
+    openaiApiKey: process.env.OPENAI_API_KEY,
+    perplexityApiKey: process.env.PERPLEXITY_API_KEY,
+  },
 })

@@ -6,6 +6,10 @@ export enum ErrorCode {
   AUTH_TOKEN_EXPIRED = 'AUTH.TOKEN_EXPIRED',
   AUTH_REFRESH_TOKEN_EXPIRED = 'AUTH.REFRESH_TOKEN_EXPIRED',
 
+  AI_NO_RESPONSE = 'AI.NO_RESPONSE',
+  AI_HTTP_ERROR = 'AI.HTTP_ERROR',
+
+  // 500
   INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
 }
 
@@ -16,6 +20,9 @@ export const ErrorCodeMessage: Record<ErrorCode, string> = {
   [ErrorCode.AUTH_UNAUTHORIZED]: 'Unauthorized',
   [ErrorCode.AUTH_TOKEN_EXPIRED]: 'Token is expired',
   [ErrorCode.AUTH_REFRESH_TOKEN_EXPIRED]: 'Refresh token is expired',
+
+  [ErrorCode.AI_NO_RESPONSE]: 'AI no response',
+  [ErrorCode.AI_HTTP_ERROR]: 'AI http error',
 
   [ErrorCode.INTERNAL_SERVER_ERROR]: 'Internal Server Error',
 }

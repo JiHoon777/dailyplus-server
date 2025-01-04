@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
+import { AiModule } from './ai'
 import { AiStoriesModule } from './ai-stories'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -41,6 +42,7 @@ import { UsersModule } from './users'
     QuotePersonsModule,
     QuoteAiInterpretationsModule,
     AiStoriesModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -12,10 +12,15 @@ interface JwtConfig {
   refreshSecretKey: string
   refreshSecretExpiration: string
 }
+interface AiConfig {
+  openaiApiKey: string
+  perplexityApiKey: string
+}
 
 export interface IConfiguration {
   port: number
   env: string
   database: DatabaseConfig
+  ai: AiConfig
   jwt: JwtConfig
 }
