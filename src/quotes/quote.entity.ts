@@ -16,6 +16,9 @@ export class Quote extends BaseEntity {
   @Column('text')
   koreanText: string
 
+  @Column('int')
+  quotePersonId: number
+
   @ManyToOne(() => QuotePerson)
   @JoinColumn({ name: 'quote_person_id' })
   quotePerson: QuotePerson
