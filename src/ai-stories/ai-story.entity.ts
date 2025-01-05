@@ -17,6 +17,9 @@ export class AiStory extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   prompt: string | null
 
+  @Column('int', { nullable: true })
+  userId: number | null
+
   @ManyToOne(() => User, { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'user_id' })
   user: User | null
