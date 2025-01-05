@@ -34,7 +34,7 @@ export class QuoteAiInterpretationsService extends BaseEntityService<QuoteAiInte
 
     const [list, total] = await this.query({
       pageOpt: { page, size },
-      order: { created_at: 'DESC' },
+      order: { 'e.createdAt': 'DESC' },
       decorator: (qb) => {
         if (quoteId) {
           qb.andWhere('e.quote_id = :quoteId', { quoteId })

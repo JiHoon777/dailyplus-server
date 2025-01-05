@@ -5,8 +5,8 @@ import { Repository } from 'typeorm'
 import { ListResponseDto } from '@/shared/dto'
 import { BaseEntityService } from '@/shared/entities'
 
-import { ListArticleRequestDto } from './dto'
 import { Article } from './article.entity'
+import { ListArticleRequestDto } from './dto'
 
 @Injectable()
 export class ArticlesService extends BaseEntityService<Article> {
@@ -22,9 +22,9 @@ export class ArticlesService extends BaseEntityService<Article> {
 
     const [list, total] = await this.query({
       pageOpt: { page, size },
-      order: { published_at: 'DESC' },
+      order: { 'e.publishedAt': 'DESC' },
       decorator: (qb) => {
-        qb.where('e.published_at IS NOT NULL')
+        qb.where('e.publishedAt IS NOT NULL')
 
         if (type) {
           qb.andWhere('e.type = :type', { type })

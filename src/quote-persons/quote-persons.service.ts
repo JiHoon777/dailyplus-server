@@ -24,7 +24,7 @@ export class QuotePersonsService extends BaseEntityService<QuotePerson> {
 
     const [list, total] = await this.query({
       pageOpt: { page, size },
-      order: { created_at: 'DESC' },
+      order: { 'e.createdAt': 'DESC' },
     })
 
     return ListResponseDto.of(list, total, page, size)
