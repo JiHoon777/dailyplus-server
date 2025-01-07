@@ -22,10 +22,10 @@ export class AiStoriesService extends BaseEntityService<AiStory> {
 
     const [list, total] = await this.query({
       pageOpt: { page, size },
-      order: { 'e.publishedAt': 'DESC' },
+      order: { 'e.createdAt': 'DESC' },
       decorator: (qb) => {
         if (userId) {
-          qb.andWhere('e.user_id = :userId', { userId })
+          qb.andWhere('e.userId = :userId', { userId })
         }
       },
     })
