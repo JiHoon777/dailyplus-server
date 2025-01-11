@@ -1,5 +1,10 @@
 import type { BaseEntity } from './base.entity'
-import type { FindOptionsWhere, Repository, SelectQueryBuilder } from 'typeorm'
+import type {
+  FindOptionsWhere,
+  QueryRunner,
+  Repository,
+  SelectQueryBuilder,
+} from 'typeorm'
 import type { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity'
 
 import { Logger } from '@nestjs/common'
@@ -125,5 +130,39 @@ export abstract class BaseEntityService<T_Entity extends BaseEntity> {
     }
 
     return qb.getManyAndCount()
+  }
+
+  /**
+   * 여러 엔티티를 한 번에 생성합니다
+   * @param inputs 생성할 엔티티 데이터 배열
+   * @returns 생성된 엔티티 배열
+   */
+  async createBulk(inputs: Partial<T_Entity>[]): Promise<T_Entity[]> {
+    const entities = this.repository.create(inputs as T_Entity[])
+    return this.repository.save(entities)
+  }
+
+  /**
+   * 트랜잭션 내에서 작업을 실행합니다
+   * @param callback 트랜잭션 내에서 실행할 콜백 함수
+   * @returns 콜백 함수의 반환값
+   */
+  protected async withTransaction<T>(
+    callback: (queryRunner: QueryRunner) => Promise<T>,
+  ): Promise<T> {
+    const queryRunner = this.repository.manager.connection.createQueryRunner()
+    await queryRunner.connect()
+    await queryRunner.startTransaction()
+
+    try {
+      const result = await callback(queryRunner)
+      await queryRunner.commitTransaction()
+      return result
+    } catch (err) {
+      await queryRunner.rollbackTransaction()
+      throw err
+    } finally {
+      await queryRunner.release()
+    }
   }
 }

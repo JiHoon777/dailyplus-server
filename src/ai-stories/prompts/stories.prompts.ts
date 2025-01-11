@@ -9,6 +9,8 @@ export const AI_STORY_PROMPTS = {
     {
       content: `
 주어진 명언들을 바탕으로 다음의 타입을 만족하는 이야기를 생성해줘.
+- 이모지도 적절하게 활용해줘.
+
 type BlockTitle = string
 export type IStoryContent = {
   storyTitle: string
@@ -37,7 +39,7 @@ export type IStoryMessageScript = {
   message: string
 }
 
-// 선택지
+// 선택지 (messages 의 마지막 index에 있어야 한다.)
 export type IStoryMessageChoice = {
   type: 'choice'
   choices: BlockTitle[]
@@ -55,7 +57,9 @@ export type StoryMessages =
       role: 'user',
     },
     {
-      content: customPrompt ?? '',
+      content:
+        customPrompt ??
+        `현대인의 실제 고민에 맞춤화된 이야기를 만들어주고, 공감 기반의 따뜻한 대화를 만들어줘.`,
       role: 'user',
     },
   ],

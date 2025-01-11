@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
+import { AiStory_Quote } from '@/ai-stories_quotes'
 import { QuotesService } from '@/quotes'
 import { ErrorCode } from '@/shared/consts'
 import { ListResponseDto } from '@/shared/dto'
@@ -44,7 +45,7 @@ export class AiStoriesService extends BaseEntityService<AiStory> {
 
   async generateFromQuotesAndSave(
     input: GenerateAiStoryFromQuotesRequestDto & { userId: number },
-  ) {
+  ): Promise<AiStory> {
     const { quoteIds, customPrompt, userId } = input
     const quotes = await this.quotesService.findByIds(quoteIds)
 
@@ -56,11 +57,23 @@ export class AiStoriesService extends BaseEntityService<AiStory> {
       customPrompt,
     })
 
-    return this.create({
-      title,
-      content,
-      modelVersion: 'gpt-4o-mini',
-      userId,
+    return this.withTransaction(async (queryRunner) => {
+      const aiStory = await queryRunner.manager.save(AiStory, {
+        title,
+        content,
+        modelVersion: 'gpt-4o-mini',
+        userId,
+      })
+
+      await queryRunner.manager.save(
+        AiStory_Quote,
+        quoteIds.map((quoteId) => ({
+          aiStoryId: aiStory.id,
+          quoteId,
+        })),
+      )
+
+      return aiStory
     })
   }
 }
