@@ -1,4 +1,10 @@
-import { IsJSON, IsNumber, IsOptional, IsString } from 'class-validator'
+import {
+  IsArray,
+  IsJSON,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator'
 
 export class CreateAiStoryDto {
   @IsString()
@@ -16,4 +22,14 @@ export class CreateAiStoryDto {
 
   @IsNumber()
   userId: number
+}
+
+export class GenerateAiStoryFromQuotesRequestDto {
+  @IsNumber()
+  @IsArray()
+  quoteIds: number[]
+
+  @IsString()
+  @IsOptional()
+  customPrompt?: string
 }

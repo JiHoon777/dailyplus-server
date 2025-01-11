@@ -10,11 +10,14 @@ import {
   Query,
 } from '@nestjs/common'
 
+import { CurrentUser } from '@/auth'
 import { Public } from '@/auth/auth.common'
+import { User } from '@/users'
 
 import { AiStoriesService } from './ai-stories.service'
 import {
   CreateAiStoryDto,
+  GenerateAiStoryFromQuotesRequestDto,
   ListAiStoryRequestDto,
   UpdateAiStoryDto,
 } from './dto'
@@ -26,6 +29,17 @@ export class AiStoriesController {
   @Post()
   create(@Body() body: CreateAiStoryDto) {
     return this.aiStoriesService.create(body)
+  }
+
+  @Post('generate-from-quotes-with-ai')
+  generateFromQuotesWithAi(
+    @CurrentUser() user: User,
+    @Body() body: GenerateAiStoryFromQuotesRequestDto,
+  ) {
+    return this.aiStoriesService.generateFromQuotesAndSave({
+      ...body,
+      userId: user.id,
+    })
   }
 
   @Public()

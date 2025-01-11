@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { In, Repository } from 'typeorm'
 
 import { ListResponseDto } from '@/shared/dto'
 import { BaseEntityService } from '@/shared/entities'
@@ -35,5 +35,11 @@ export class QuotesService extends BaseEntityService<Quote> {
     })
 
     return ListResponseDto.of(list, total, page, size)
+  }
+
+  async findByIds(quoteIds: number[]): Promise<Quote[]> {
+    return this.repository.findBy({
+      id: In(quoteIds),
+    })
   }
 }
