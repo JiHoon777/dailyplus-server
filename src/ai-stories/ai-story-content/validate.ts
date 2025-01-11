@@ -3,7 +3,7 @@ import type {
   IStoryContent,
   StoryMessages,
   StoryMessageType,
-} from './types'
+} from './type'
 
 export const validateAiStoryContent = (content: string): [string, string] => {
   try {
