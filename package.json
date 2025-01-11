@@ -27,8 +27,7 @@
     "docker:prod:up": "docker compose -f docker-compose.prod.yml up",
     "docker:prod:down": "docker compose -f docker-compose.prod.yml down",
     "docker:logs": "docker compose logs -f",
-    "docker:clean": "docker compose down -v && docker system prune -f",
-    "generate-types": "ts-node scripts/type-generator.ts"
+    "docker:clean": "docker compose down -v && docker system prune -f"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
